@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>利用VPS实现aria2离线下载并自动上传到OneDrive | 海啸过境</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="利用VPS实现aria2离线下载并自动上传到OneDrive本教程基于CentOS 7 64位 1.环境准备更新软件、设置时区12345yum update -yyum install -y curl vim wget unzip git nanoln -sf &#x2F;usr&#x2F;share&#x2F;zoneinfo&#x2F;Asia&#x2F;Shanghai &#x2F;etc&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用VPS实现aria2离线下载并自动上传到OneDrive">
+<meta property="og:url" content="https://hc996.github.io/2020/02/17/%E5%88%A9%E7%94%A8VPS%E5%AE%9E%E7%8E%B0aria2%E7%A6%BB%E7%BA%BF%E4%B8%8B%E8%BD%BD%E5%B9%B6%E8%87%AA%E5%8A%A8%E4%B8%8A%E4%BC%A0%E5%88%B0OneDrive/index.html">
+<meta property="og:site_name" content="海啸过境">
+<meta property="og:description" content="利用VPS实现aria2离线下载并自动上传到OneDrive本教程基于CentOS 7 64位 1.环境准备更新软件、设置时区12345yum update -yyum install -y curl vim wget unzip git nanoln -sf &#x2F;usr&#x2F;share&#x2F;zoneinfo&#x2F;Asia&#x2F;Shanghai &#x2F;etc&amp;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-02-17T14:33:42.667Z">
+<meta property="article:modified_time" content="2020-02-17T13:09:40.770Z">
+<meta property="article:author" content="大海啸">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="海啸过境" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">海啸过境</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://hc996.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-利用VPS实现aria2离线下载并自动上传到OneDrive" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/02/17/%E5%88%A9%E7%94%A8VPS%E5%AE%9E%E7%8E%B0aria2%E7%A6%BB%E7%BA%BF%E4%B8%8B%E8%BD%BD%E5%B9%B6%E8%87%AA%E5%8A%A8%E4%B8%8A%E4%BC%A0%E5%88%B0OneDrive/" class="article-date">
+  <time datetime="2020-02-17T14:33:42.667Z" itemprop="datePublished">2020-02-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      利用VPS实现aria2离线下载并自动上传到OneDrive
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="利用VPS实现aria2离线下载并自动上传到OneDrive"><a href="#利用VPS实现aria2离线下载并自动上传到OneDrive" class="headerlink" title="利用VPS实现aria2离线下载并自动上传到OneDrive"></a>利用VPS实现aria2离线下载并自动上传到OneDrive</h1><p>本教程基于CentOS 7 64位</p>
+<h2 id="1-环境准备"><a href="#1-环境准备" class="headerlink" title="1.环境准备"></a>1.环境准备</h2><h4 id="更新软件、设置时区"><a href="#更新软件、设置时区" class="headerlink" title="更新软件、设置时区"></a>更新软件、设置时区</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">yum update -y</span><br><span class="line"></span><br><span class="line">yum install -y curl vim wget unzip git nano</span><br><span class="line"></span><br><span class="line">ln -sf &#x2F;usr&#x2F;share&#x2F;zoneinfo&#x2F;Asia&#x2F;Shanghai &#x2F;etc&#x2F;localtime</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="安装宝塔面板"><a href="#安装宝塔面板" class="headerlink" title="安装宝塔面板"></a>安装宝塔面板</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y wget &amp;&amp; wget -O install.sh http:&#x2F;&#x2F;download.bt.cn&#x2F;install&#x2F;install_6.0.sh &amp;&amp; sh install.sh</span><br></pre></td></tr></table></figure>
+
+<p>输入 y，回车开始安装，安装完成后记住面板登录信息。</p>
+<h4 id="在宝塔面板中安装Nginx（此步可跳过）"><a href="#在宝塔面板中安装Nginx（此步可跳过）" class="headerlink" title="在宝塔面板中安装Nginx（此步可跳过）"></a>在宝塔面板中安装Nginx（此步可跳过）</h4><h2 id="2-安装Aria2"><a href="#2-安装Aria2" class="headerlink" title="2.安装Aria2"></a>2.安装Aria2</h2><h4 id="运行一键脚本"><a href="#运行一键脚本" class="headerlink" title="运行一键脚本"></a>运行一键脚本</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -N --no-check-certificate https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;ToyoDAdoubi&#x2F;doubi&#x2F;master&#x2F;aria2.sh &amp;&amp; chmod +x aria2.sh &amp;&amp; bash aria2.sh</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="授权认证"><a href="#授权认证" class="headerlink" title="授权认证"></a>授权认证</h4><p>授权地址→<a href="https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=78d4dc35-7e46-42c6-9023-2d39314433a5&response_type=code&redirect_uri=http://localhost/onedrive-login&response_mode=query&scope=offline_access%20User.Read%20Files.ReadWrite.All" target="_blank" rel="noopener">【国际版、个人版(家庭版)】</a>、<a href="https://login.chinacloudapi.cn/common/oauth2/v2.0/authorize?client_id=dfe36e60-6133-48cf-869f-4d15b8354769&response_type=code&redirect_uri=http://localhost/onedrive-login&response_mode=query&scope=offline_access%20User.Read%20Files.ReadWrite.All" target="_blank" rel="noopener">【中国版(世纪互联)】</a>。</p>
+<p>授权后会跳转到一个打不开的链接，在浏览器地址栏复制好整个链接地址，包括<a href="http://localhost。" target="_blank" rel="noopener">http://localhost。</a></p>
+<h2 id="3-安装OneDriveUploader"><a href="#3-安装OneDriveUploader" class="headerlink" title="3.安装OneDriveUploader"></a>3.安装OneDriveUploader</h2><h4 id="一键安装脚本"><a href="#一键安装脚本" class="headerlink" title="一键安装脚本"></a>一键安装脚本</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;MoeClub&#x2F;OneList&#x2F;master&#x2F;OneDriveUploader&#x2F;amd64&#x2F;linux&#x2F;OneDriveUploader -P &#x2F;usr&#x2F;local&#x2F;bin&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p>给予权限</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod +x &#x2F;usr&#x2F;local&#x2F;bin&#x2F;OneDriveUploader</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="初始化配置"><a href="#初始化配置" class="headerlink" title="初始化配置"></a>初始化配置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#国际版，将url换成你上面复制的授权地址，包括http:&#x2F;&#x2F;loaclhost。</span><br><span class="line">OneDriveUploader -a &quot;url&quot;</span><br><span class="line"></span><br><span class="line">#个人版(家庭版)，将url换成你上面复制的授权地址，包括http:&#x2F;&#x2F;loaclhost。</span><br><span class="line">OneDriveUploader -ms -a &quot;url&quot;</span><br><span class="line"></span><br><span class="line">#中国版(世纪互联)，将url换成你上面复制的授权地址，包括http:&#x2F;&#x2F;loaclhost。</span><br><span class="line">OneDriveUploader -cn -a &quot;url&quot;</span><br></pre></td></tr></table></figure>
+
+<p>返回 Init config file: /root/auth.json 信息，则初始化成功。</p>
+<h2 id="4-配置Aria2自动上传"><a href="#4-配置Aria2自动上传" class="headerlink" title="4.配置Aria2自动上传"></a>4.配置Aria2自动上传</h2><p>打开宝塔面板，在 /root文件夹中创建一个空白文件，文件名 <code>rcloneupload.sh</code></p>
+<p>在该文件中复制以下代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">#!&#x2F;bin&#x2F;bash</span><br><span class="line"></span><br><span class="line">GID&#x3D;&quot;$1&quot;;</span><br><span class="line">FileNum&#x3D;&quot;$2&quot;;</span><br><span class="line">File&#x3D;&quot;$3&quot;;</span><br><span class="line">MaxSize&#x3D;&quot;15728640&quot;;</span><br><span class="line">Thread&#x3D;&quot;3&quot;;  #默认3线程，自行修改，服务器配置不好的话，不建议太多</span><br><span class="line">Block&#x3D;&quot;20&quot;;  #默认分块20m，自行修改</span><br><span class="line">RemoteDIR&#x3D;&quot;&quot;;  #上传到Onedrive的路径，默认为根目录，如果要上传到MOERATS目录，&quot;&quot;里面请填成MOERATS</span><br><span class="line">LocalDIR&#x3D;&quot;&#x2F;www&#x2F;download&#x2F;&quot;;  #Aria2下载目录，记得最后面加上&#x2F;</span><br><span class="line">Uploader&#x3D;&quot;&#x2F;usr&#x2F;local&#x2F;bin&#x2F;OneDriveUploader&quot;;  #上传的程序完整路径，默认为本文安装的目录</span><br><span class="line">Config&#x3D;&quot;&#x2F;root&#x2F;auth.json&quot;;  #初始化生成的配置auth.json绝对路径，参考第3步骤生成的路径</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if [[ -z $(echo &quot;$FileNum&quot; |grep -o &#39;[0-9]*&#39; |head -n1) ]]; then FileNum&#x3D;&#39;0&#39;; fi</span><br><span class="line">if [[ &quot;$FileNum&quot; -le &#39;0&#39; ]]; then exit 0; fi</span><br><span class="line">if [[ &quot;$#&quot; !&#x3D; &#39;3&#39; ]]; then exit 0; fi</span><br><span class="line"></span><br><span class="line">function LoadFile()&#123;</span><br><span class="line">  if [[ ! -e &quot;$&#123;Uploader&#125;&quot; ]]; then return; fi</span><br><span class="line">  IFS_BAK&#x3D;$IFS</span><br><span class="line">  IFS&#x3D;$&#39;\n&#39;</span><br><span class="line">  tmpFile&#x3D;&quot;$(echo &quot;$&#123;File&#x2F;#$LocalDIR&#125;&quot; |cut -f1 -d&#39;&#x2F;&#39;)&quot;</span><br><span class="line">  FileLoad&#x3D;&quot;$&#123;LocalDIR&#125;$&#123;tmpFile&#125;&quot;</span><br><span class="line">  if [[ ! -e &quot;$&#123;FileLoad&#125;&quot; ]]; then return; fi</span><br><span class="line">  ItemSize&#x3D;$(du -s &quot;$&#123;FileLoad&#125;&quot; |cut -f1 |grep -o &#39;[0-9]*&#39; |head -n1)</span><br><span class="line">  if [[ -z &quot;$ItemSize&quot; ]]; then return; fi</span><br><span class="line">  if [[ &quot;$ItemSize&quot; -ge &quot;$MaxSize&quot; ]]; then</span><br><span class="line">    echo -ne &quot;\033[33m$&#123;FileLoad&#125; \033[0mtoo large to spik.\n&quot;;</span><br><span class="line">    return;</span><br><span class="line">  fi</span><br><span class="line">  $&#123;Uploader&#125; -c &quot;$&#123;Config&#125;&quot; -t &quot;$&#123;Thread&#125;&quot; -b &quot;$&#123;Block&#125;&quot; -s &quot;$&#123;FileLoad&#125;&quot; -r &quot;$&#123;RemoteDIR&#125;&quot; -skip</span><br><span class="line">  if [[ $? &#x3D;&#x3D; &#39;0&#39; ]]; then</span><br><span class="line">    rm -rf &quot;$&#123;FileLoad&#125;&quot;;</span><br><span class="line">  fi</span><br><span class="line">  IFS&#x3D;$IFS_BAK</span><br><span class="line">&#125;</span><br><span class="line">LoadFile;</span><br></pre></td></tr></table></figure>
+
+<p>在以上代码中修改OneDrive上传路径和Aria2下载目录，修改完成后保存退出。</p>
+<p>授权</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod +x rcloneupload.sh</span><br></pre></td></tr></table></figure>
+
+
+
+<p>在/root/.aria2/ 中找到  <code>aria2.conf</code> ，在其最后添加一行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">on-download-complete&#x3D;&#x2F;root&#x2F;rcloneupload.sh</span><br></pre></td></tr></table></figure>
+
+
+
+<p>安装<code>dos2unix</code>并转换格式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install dos2unix -y</span><br><span class="line">dos2unix &#x2F;root&#x2F;rcloneupload.sh</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://hc996.github.io/2020/02/17/%E5%88%A9%E7%94%A8VPS%E5%AE%9E%E7%8E%B0aria2%E7%A6%BB%E7%BA%BF%E4%B8%8B%E8%BD%BD%E5%B9%B6%E8%87%AA%E5%8A%A8%E4%B8%8A%E4%BC%A0%E5%88%B0OneDrive/" data-id="ck6qk87bd00001gut3kova22o" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/02/17/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hello World</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/02/17/%E5%88%A9%E7%94%A8VPS%E5%AE%9E%E7%8E%B0aria2%E7%A6%BB%E7%BA%BF%E4%B8%8B%E8%BD%BD%E5%B9%B6%E8%87%AA%E5%8A%A8%E4%B8%8A%E4%BC%A0%E5%88%B0OneDrive/">利用VPS实现aria2离线下载并自动上传到OneDrive</a>
+          </li>
+        
+          <li>
+            <a href="/2020/02/17/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 大海啸<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
