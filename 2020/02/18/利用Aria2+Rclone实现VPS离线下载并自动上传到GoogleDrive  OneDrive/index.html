@@ -93,7 +93,7 @@
     </div>
     
         <div id="toc" class="toc-article">
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#利用Aria2-Rclone实现VPS离线下载并自动上传到GoogleDrive-OneDrive"><span class="toc-text">利用Aria2+Rclone实现VPS离线下载并自动上传到GoogleDrive &#x2F; OneDrive</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-环境准备"><span class="toc-text">1.环境准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-安装Aria2"><span class="toc-text">2.安装Aria2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-安装和配置Rclone"><span class="toc-text">3.安装和配置Rclone</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-配置上传脚本"><span class="toc-text">4.配置上传脚本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-重启-Aria2"><span class="toc-text">5.重启 Aria2</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-环境准备"><span class="toc-text">1.环境准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-安装Aria2"><span class="toc-text">2.安装Aria2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-安装和配置Rclone"><span class="toc-text">3.安装和配置Rclone</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-配置上传脚本"><span class="toc-text">4.配置上传脚本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-重启-Aria2"><span class="toc-text">5.重启 Aria2</span></a></li></ol>
 </div>
     
 </div>
@@ -128,7 +128,13 @@
     </div>
 
     <div class="post-meta">
-        <span class="attr">发布于：<span>2020-02-18 16:02:42</span></span>
+        <span class="attr">发布于：<span>2020-02-18 08:45:23</span></span>
+        
+        <span class="attr">标签：/
+        
+        <a class="tag" href="/tags/#VPS" title="VPS">VPS</a>
+        <span>/</span>
+        
         
         </span>
         <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
@@ -136,7 +142,7 @@
 </span>
     </div>
     <div class="post-content ">
-        <h1 id="利用Aria2-Rclone实现VPS离线下载并自动上传到GoogleDrive-OneDrive"><a href="#利用Aria2-Rclone实现VPS离线下载并自动上传到GoogleDrive-OneDrive" class="headerlink" title="利用Aria2+Rclone实现VPS离线下载并自动上传到GoogleDrive / OneDrive"></a>利用Aria2+Rclone实现VPS离线下载并自动上传到GoogleDrive / OneDrive</h1><p>本教程基于CentOS 7 64位</p>
+        <p>本教程基于CentOS 7 64位</p>
 <p>上篇内容介绍了如何在VPS上配置Aria2离线下载并自动上传至OneDrive，但是过程繁琐且容易出现各种各样的小问题。本篇采用了更为简洁通用的方式，来实现自动离线下载上传，不止支持OneDrive，还支持GoogleDrive的team盘等多种网盘。</p>
 <h2 id="1-环境准备"><a href="#1-环境准备" class="headerlink" title="1.环境准备"></a>1.环境准备</h2><p>更新软件、设置时区</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">yum <span class="keyword">update</span> -y</span><br><span class="line"></span><br><span class="line">yum <span class="keyword">install</span> -y curl vim wget unzip git nano</span><br><span class="line"></span><br><span class="line"><span class="keyword">ln</span> -sf /usr/<span class="keyword">share</span>/zoneinfo/Asia/Shanghai /etc/<span class="keyword">localtime</span></span><br></pre></td></tr></table></figure>
