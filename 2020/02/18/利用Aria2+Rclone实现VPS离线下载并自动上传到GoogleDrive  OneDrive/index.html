@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+        利用Aria2+Rclone实现VPS离线下载并自动上传到GoogleDrive  OneDrive - undefined
+        
+    </title>
+
+    <!-- Custom CSS -->
+    
+<link rel="stylesheet" href="/css/aircloud.css">
+
+    
+<link rel="stylesheet" href="/css/gitment.css">
+
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+
+<div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
+
+<div class="index-about">
+    <i> 本人工地老司机 </i>
+</div>
+
+<div class="index-container">
+    
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar ">
+            <img src="/img/avatar.jpg" />
+        </div>
+        <div class="name">
+            <i>大海啸</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li >
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>主页</span>
+                </a>
+            </li>
+            <li >
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>标签</span>
+                </a>
+            </li>
+            <li >
+                <a href="/archives">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>存档</span>
+                </a>
+            </li>
+            <li >
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>关于</span>
+                </a>
+            </li>
+            
+            <li>
+                <a id="search">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span>搜索</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#利用Aria2-Rclone实现VPS离线下载并自动上传到GoogleDrive-OneDrive"><span class="toc-text">利用Aria2+Rclone实现VPS离线下载并自动上传到GoogleDrive &#x2F; OneDrive</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-环境准备"><span class="toc-text">1.环境准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-安装Aria2"><span class="toc-text">2.安装Aria2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-安装和配置Rclone"><span class="toc-text">3.安装和配置Rclone</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-配置上传脚本"><span class="toc-text">4.配置上传脚本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-重启-Aria2"><span class="toc-text">5.重启 Aria2</span></a></li></ol></li></ol>
+</div>
+    
+</div>
+
+
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input"/>
+            <span id="begin-search">搜索</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>
+
+        <div class="index-about-mobile">
+            <i> 本人工地老司机 </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        利用Aria2+Rclone实现VPS离线下载并自动上传到GoogleDrive  OneDrive
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2020-02-18 16:02:42</span></span>
+        
+        </span>
+        <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <h1 id="利用Aria2-Rclone实现VPS离线下载并自动上传到GoogleDrive-OneDrive"><a href="#利用Aria2-Rclone实现VPS离线下载并自动上传到GoogleDrive-OneDrive" class="headerlink" title="利用Aria2+Rclone实现VPS离线下载并自动上传到GoogleDrive / OneDrive"></a>利用Aria2+Rclone实现VPS离线下载并自动上传到GoogleDrive / OneDrive</h1><p>本教程基于CentOS 7 64位</p>
+<p>上篇内容介绍了如何在VPS上配置Aria2离线下载并自动上传至OneDrive，但是过程繁琐且容易出现各种各样的小问题。本篇采用了更为简洁通用的方式，来实现自动离线下载上传，不止支持OneDrive，还支持GoogleDrive的team盘等多种网盘。</p>
+<h2 id="1-环境准备"><a href="#1-环境准备" class="headerlink" title="1.环境准备"></a>1.环境准备</h2><p>更新软件、设置时区</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">yum <span class="keyword">update</span> -y</span><br><span class="line"></span><br><span class="line">yum <span class="keyword">install</span> -y curl vim wget unzip git nano</span><br><span class="line"></span><br><span class="line"><span class="keyword">ln</span> -sf /usr/<span class="keyword">share</span>/zoneinfo/Asia/Shanghai /etc/<span class="keyword">localtime</span></span><br></pre></td></tr></table></figure>
+
+<p>安装宝塔面板</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -<span class="keyword">y</span> wget &amp;&amp; wget -O install.<span class="keyword">sh</span> http://download.bt.<span class="keyword">cn</span>/install/install_6.<span class="number">0</span>.<span class="keyword">sh</span> &amp;&amp; <span class="keyword">sh</span> install.<span class="keyword">sh</span></span><br></pre></td></tr></table></figure>
+
+<p>输入 y，回车开始安装，安装完成后记住面板登录信息。</p>
+<h2 id="2-安装Aria2"><a href="#2-安装Aria2" class="headerlink" title="2.安装Aria2"></a>2.安装Aria2</h2><p>运行一键脚本</p>
+<figure class="highlight sas"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -N git.io/aria2.sh <span class="variable">&amp;&amp;</span> chmod +<span class="meta">x</span> aria2.sh <span class="variable">&amp;&amp;</span> ./aria2.sh</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-安装和配置Rclone"><a href="#3-安装和配置Rclone" class="headerlink" title="3.安装和配置Rclone"></a>3.安装和配置Rclone</h2><p>官方一键脚本</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl <span class="string">https:</span><span class="comment">//rclone.org/install.sh | sudo bash</span></span><br></pre></td></tr></table></figure>
+
+<p>运行Rclone</p>
+<p>OneDrive配置过程：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">rclone config</span><br><span class="line"></span><br><span class="line">n/s/q&gt; n  #选n</span><br><span class="line"></span><br><span class="line">name&gt; onedrive  #起个名</span><br><span class="line"></span><br><span class="line">Storage&gt; 23  #选择23 OneDrive ，如果要上传到Google Drive 则选13</span><br><span class="line"></span><br><span class="line">client_id&gt;  #直接回车</span><br><span class="line"></span><br><span class="line">client_secret&gt;  #直接回车</span><br><span class="line"></span><br><span class="line"><span class="builtin-name">Edit</span> advanced config? (y/n)</span><br><span class="line">y) <span class="literal">Yes</span></span><br><span class="line">n) <span class="literal">No</span></span><br><span class="line">y/n&gt; n</span><br><span class="line"></span><br><span class="line">Use auto config?</span><br><span class="line">y) <span class="literal">Yes</span></span><br><span class="line">n) <span class="literal">No</span></span><br><span class="line">y/n&gt; n</span><br><span class="line"></span><br><span class="line">result&gt;  #这里把授权成功返回的&#123;<span class="string">"access_token"</span>:<span class="string">"******"</span>&#125;包括大括号都复制过来。</span><br><span class="line"></span><br><span class="line">Your choice&gt; 1</span><br><span class="line"></span><br><span class="line">Chose drive <span class="keyword">to</span> use:&gt; 0</span><br><span class="line"></span><br><span class="line">两个回车</span><br><span class="line"></span><br><span class="line">q 退出</span><br></pre></td></tr></table></figure>
+
+
+
+<p>Google Drive 配置方法：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">rclone config</span><br><span class="line"></span><br><span class="line"><span class="meta">n/s/q&gt;</span><span class="bash"> n  <span class="comment">#选n</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">name&gt;</span><span class="bash"> google  <span class="comment">#起个名</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">Storage&gt;</span><span class="bash"> 13  <span class="comment">#选择Google Drive</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">client_id&gt;</span><span class="bash">  <span class="comment">#直接回车</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">client_secret&gt;</span><span class="bash">  <span class="comment">#直接回车</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">scope&gt;</span><span class="bash"> 1</span></span><br><span class="line"></span><br><span class="line"><span class="meta">root_folder_id&gt;</span><span class="bash">  <span class="comment">#回车</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">service_account_file&gt;</span><span class="bash">  <span class="comment">#回车</span></span></span><br><span class="line"></span><br><span class="line">Edit advanced config&gt; n</span><br><span class="line"></span><br><span class="line">Use auto config&gt; n</span><br><span class="line"></span><br><span class="line">点链接获取授权码</span><br><span class="line"></span><br><span class="line">Configure this as a team drive&gt; y</span><br><span class="line"></span><br><span class="line">Enter a Team Drive ID&gt;  #在列出的清单里选择</span><br><span class="line"></span><br><span class="line">回车</span><br><span class="line"></span><br><span class="line">q 退出</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="4-配置上传脚本"><a href="#4-配置上传脚本" class="headerlink" title="4.配置上传脚本"></a>4.配置上传脚本</h2><p>打开宝塔面板，在 /root/.aria2/ 目录中编辑 autoupload.sh 修改以下两项：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name</span>=<span class="string">'Onedrive'</span> <span class="comment">#配置Rclone时的name</span></span><br><span class="line"><span class="attr">folder</span>=<span class="string">'/DRIVEX/Download'</span> <span class="comment">#网盘里的文件夹，留空为网盘根目录。</span></span><br></pre></td></tr></table></figure>
+
+<p>在同一目录下编辑 aria2.conf 找到下面一行，将开头的#去掉</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">on</span>-download-<span class="built_in">complete</span>=/root/.aria2/autoupload.<span class="keyword">sh</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="5-重启-Aria2"><a href="#5-重启-Aria2" class="headerlink" title="5.重启 Aria2"></a>5.重启 Aria2</h2><figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service aria2 <span class="built_in">restart</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+        
+        <br />
+        <div id="comment-container">
+        </div>
+        <div id="disqus_thread"></div>
+
+        <div id="lv-container">
+        </div>
+
+    </div>
+</div>
+
+    </div>
+</div>
+
+
+<footer class="footer">
+    <ul class="list-inline text-center">
+        
+        
+
+        
+
+        
+
+        
+
+        
+
+    </ul>
+    
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>  Theme <a href="https://github.com/aircloud/hexo-theme-aircloud" target="_blank" rel="noopener">AirCloud</a></p>
+</footer>
+
+
+
+
+</body>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "search.json"
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+<script src="/js/index.js"></script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+</html>
