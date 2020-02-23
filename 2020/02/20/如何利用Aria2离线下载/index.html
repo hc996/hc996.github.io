@@ -11,7 +11,7 @@
 
     <title>
         
-        
+        如何利用Aria2离线下载 - undefined
         
     </title>
 
@@ -69,7 +69,7 @@
                     <span>标签</span>
                 </a>
             </li>
-            <li  class=active >
+            <li >
                 <a href="/archives">
                     <i class="iconfont icon-guidang2"></i>
                     <span>存档</span>
@@ -91,6 +91,10 @@
             
         </ul>
     </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#桌面端"><span class="toc-text">桌面端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-AriaNg"><span class="toc-text">1.AriaNg</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-PanDownload"><span class="toc-text">2.PanDownload</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#移动端"><span class="toc-text">移动端</span></a></li></ol>
+</div>
     
 </div>
 
@@ -118,65 +122,49 @@
         
 
 
-<!-- 归档列表 -->
+<div class="post-container">
+    <div class="post-title">
+        如何利用Aria2离线下载
+    </div>
 
-<div class="archives-container">
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2020-02-20 21:08:33</span></span>
+        
+        <span class="attr">标签：/
+        
+        <a class="tag" href="/tags/#Aria2" title="Aria2">Aria2</a>
+        <span>/</span>
+        
+        <a class="tag" href="/tags/#网盘" title="网盘">网盘</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <h2 id="桌面端"><a href="#桌面端" class="headerlink" title="桌面端"></a>桌面端</h2><h3 id="1-AriaNg"><a href="#1-AriaNg" class="headerlink" title="1.AriaNg"></a>1.AriaNg</h3><p>AriaNg是一款方便简洁的aria2下载Web客户端，你可以在自己的VPS上搭建，也可以使用别人搭建好的页面。最简捷的办法是使用 Aria2 For Chrome 扩展程序，下面将讲解如何使用这款插件进行离线下载的操作。</p>
+<p>在Chrome应用商店里安装 Aria2 For Chorme，打开后在AriaNg设置中点击加号新建RPC。</p>
+<p><img src="https://s2.ax1x.com/2020/02/20/3eFISK.png" alt="3eFISK.png"></p>
+<p>在Aria2 RPC地址栏中填入VPS的IP地址，在RPC密钥栏中填入口令，点击右上角的重新加载按钮，就会成功连接到你的VPS进行离线下载了。</p>
+<p><img src="https://s2.ax1x.com/2020/02/20/3ekOuF.png" alt="3ekOuF.png"></p>
+<h3 id="2-PanDownload"><a href="#2-PanDownload" class="headerlink" title="2.PanDownload"></a>2.PanDownload</h3><p>PanDownload是一款强大的网盘下载软件，使用需要登录百度账号（用多了会被限速，SVIP也限）。在 设置-远程-添加 中填入VPS的IP地址、端口号（默认6800）、口令，测试连接成功后保存。下载文件时，设置下载存储路径为之前添加的远程路径。</p>
+<p><img src="https://s2.ax1x.com/2020/02/21/3u8Pds.png" alt="3u8Pds.png"></p>
+<p>使用PanDownload进行BT下载的方式是先离线下载到百度网盘，再用上述方法下载转存。</p>
+<h2 id="移动端"><a href="#移动端" class="headerlink" title="移动端"></a>移动端</h2><p>安装Aria2APP，设置方法与桌面端大同小异。</p>
 
-<div class="one-tag-list">
-                <span class="fa fa-calendar-times-o listing-seperator" id="2020">
-                    <span class="tag-text">2020</span>
-                </span>
-    <ul>
         
-        <!-- <li class="listing-item">
-        <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-        <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-        </li> -->
-        <li >
-            <span>02-20</span>
-            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-            <a href="/2020/02/20/如何利用Aria2离线下载/">
-                        <span>
-                            如何利用Aria2离线下载
-                        </span>
-            </a>
-            <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-        </li>
-        
-        <!-- <li class="listing-item">
-        <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-        <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-        </li> -->
-        <li >
-            <span>02-18</span>
-            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-            <a href="/2020/02/18/利用Aria2+Rclone实现VPS离线下载并自动上传到GoogleDrive  OneDrive/">
-                        <span>
-                            利用Aria2+Rclone实现VPS离线下载并自动上传到GoogleDrive  OneDrive
-                        </span>
-            </a>
-            <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-        </li>
-        
-        <!-- <li class="listing-item">
-        <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-        <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-        </li> -->
-        <li >
-            <span>02-15</span>
-            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-            <a href="/2020/02/15/利用VPS实现aria2离线下载并自动上传到OneDrive/">
-                        <span>
-                            利用VPS实现aria2离线下载并自动上传到OneDrive
-                        </span>
-            </a>
-            <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-        </li>
-        
+        <br />
+        <div id="comment-container">
+        </div>
+        <div id="disqus_thread"></div>
 
-    </ul>
-</div>
+        <div id="lv-container">
+        </div>
 
+    </div>
 </div>
 
     </div>
@@ -211,7 +199,7 @@
     // We expose some of the variables needed by the front end
     window.hexo_search_path = "search.json"
     window.hexo_root = "/"
-    window.isPost = false
+    window.isPost = true
 </script>
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 
